@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hang.mapper.user.BookUserMapper">
+	
+	<!-- 	//定义一个注册的方法
+	int saveUser(BookUser user); -->
+	<insert id="saveUser" parameterType="com.hang.pojo.BookUser">
+		insert into system_book_user(userId,userPsw,userName,role)
+		values(#{userId},#{userPsw},#{userName},#{role})
+	</insert>
+	
+	<!-- //定义一个登录的方法
+	int loginValidate(@Param("userid") String userId,@Param("userPsw") String userPsw);
+	-->
+	<select id="loginValidate" resultType="com.hang.pojo.BookUser">
+		select count(1) from system_book_user
+		<where>
+			<if test="userId != null">
+				and userId=#{userId}
+			</if>
+			<if test="userPsw != null">
+				and userPsw=#{userPsw}
+			</if>
+		</where>
+	</select>
+	
+	
+	<!-- 		//查询图书信息
+	List<BookInfo> getBookInfo(); -->
+	<select id="getBookInfo" resultType="com.hang.pojo.BookInfo">
+		SELECT * FROM system_book_info
+	</select>
+</mapper>
